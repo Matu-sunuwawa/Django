@@ -1,0 +1,58 @@
+
+
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<script src="{% static 'users/js/main.js' %}"></script>
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+    {% if request.user.is_superuser %}
+        <div class="header-bar">
+            <h3>My Ocean</h3><br>
+            <div>
+                {% for message in messages %}
+                    <div style="color: red;font-size: 20px;">{{message}}</div>
+                {% endfor %}
+            </div>
+    
+            {% if user.is_authenticated %}
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'logout' %}">logout</a></button>
+            {% else %}
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'login' %}">Signin</a></button>
+            {% endif %}
+        </div>
+        
+        <div class="card-body">
+            <form action="/chooseuser/" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="enter the name of users" name="login" required>
+                <p><button class="button">Login</button></p>
+            </form>
+        </div>
+        
+        <div>
+            {% for message in messages %}
+                <div style="color: red;font-size: 20px;">{{message}}</div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="header-bar">
+            <div>
+                <h1>Hello {{user.username|title}}</h1>
+                <h3>choose account type.</h3>
+            </div>
+            {% if user.is_authenticated %}
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'logout' %}">logout</a></button>
+            {% else %}
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'login' %}">Signin</a></button>
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            <p><a href="{% url 'savingacc' %}"><button class="button">Go to saving</button></a></p>
+            <p><a href="{% url 'creditacc' %}"><button class="button">Go to credit</button></a></p>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

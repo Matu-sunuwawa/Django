@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+    <title>Ocean Service</title>
+</head>
+<body class="mama">
+    <!-- <style>
+        /* .contain{
+            text-align: center;
+        } */
+
+        /* body{
+                 background-image: url(./css/images/orange.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 80vh;
+        } */
+    </style> -->
+    <div class="container">
+        <div class="header-bar">
+
+            <h3>Welcome {{user.username}}</h3>
+            <form action="" method="POST">
+            {% if user.is_authenticated %}
+                <button><a href="{% url 'profile' %}">Profile</a></button>
+                <button><a href="{% url 'logout' %}">Logout</a></button>
+            {% else %}
+                <button><a href="{% url 'register' %}">Sign up</a></button>
+            {% endif %}
+        </div>
+
+        <h1>This is your home page house!</h1>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<div class="header-bar">
+    <h3><a href="{% url 'savingacc' %}">Go back</a></h3>
+    <h3>Transfer</h3>
+    <div>
+        {% for message in messages %}
+            <div style="color: red;font-size: 20px;">{{message}}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .number{
+        border: 1px solid rgb(255, 166, 0);
+        border-radius: 5px;
+        padding: 10px;
+        width: 90%;
+    }
+</style>
+
+<div class="card-body">
+    <form action="/transfer/" method="POST">
+        {% csrf_token %}
+        <p><input type="text" placeholder="enter the name of the user" name="name" required></p>
+        <p><input class="number" type="number" placeholder="enter the amount" name="amount" required></p>
+        <p><button class="button">Transfer</button></p>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+
+
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<div class="header-bar">
+    <h3><a href="{% url 'select' %}">Go back</a></h3>
+    <h3>My Ocean</h3><br>
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="card-body">
+    <form action="/chooseuser/" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="enter the name of user" name="login" required>
+        <p><button class="button">Login</button></p>
+    </form>
+</div>
+
+<div>
+    {% for message in messages %}
+        <div style="color: red;font-size: 20px;">{{message}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

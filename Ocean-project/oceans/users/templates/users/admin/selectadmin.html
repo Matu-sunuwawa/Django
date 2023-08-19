@@ -1,0 +1,30 @@
+
+
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<script src="{% static 'users/js/main.js' %}"></script>
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+    {% if request.user.is_superuser %}
+        <div class="header-bar">
+            <div>
+                <h1>Hello {{user.username}}(Admin)</h1>
+                <h3>You are accessing <span style="text-decoration: underline;font-size: 20px;">{{nuser|title}}</span> Account</h3>
+                <h3>choose account type.</h3>
+            </div>
+            {% if user.is_authenticated %}
+                <!-- <p>{{request.user}}</p> -->
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'logout' %}">logout</a></button>
+            {% else %}
+                <button class="button"><a style="text-decoration: none;color: black; font-size: 20px;" href="{% url 'login' %}">Signin</a></button>
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            <p><a href="{% url 'savingaccadmin' %}"><button class="button">Go to saving</button></a></p>
+            <p><a href="{% url 'creditaccadmin' %}"><button class="button">Go to credit</button></a></p>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

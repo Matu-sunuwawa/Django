@@ -1,0 +1,24 @@
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<div class="header-bar">
+    <h3><a href="{% url 'select' %}">Go back</a></h3>
+    <h3>Validate Transfer</h3>
+    <div>
+        {% for message in messages %}
+            <div style="color: red;font-size: 20px;">{{message}}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card-body">
+    <h2>Please be sure be safe!</h2>
+    <form action="/transferingcred/" method="POST">
+        {% csrf_token %}
+        <p>The name of the user: <span style="font-size: 20px;color: red;">{{name}}</span></p>
+        <p>Amount which you are transfering: <span style="font-size: 20px;color: red;">{{amt}}</span></p>
+        <p><button class="button">Confirm</button></p>
+    </form>
+</div>
+{% endblock %}

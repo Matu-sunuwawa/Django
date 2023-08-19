@@ -1,0 +1,28 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+    <title>Ocean Service</title>
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+        <button><a href="{% url 'logout' %}">Logout</a></button>
+    {% else %}
+        <button><a href="{% url 'register' %}">Sign up</a></button>
+    {% endif %}
+
+    <h2>{{user.username}}</h2>
+    <h2>{{user.email}}</h2>
+
+</body>
+</html>

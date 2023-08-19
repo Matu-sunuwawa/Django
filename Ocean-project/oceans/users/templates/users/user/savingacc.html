@@ -1,0 +1,51 @@
+
+
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<style>
+    .number{
+        border: 1px solid rgb(255, 166, 0);
+        border-radius: 5px;
+        padding: 10px;
+        width: 90%;
+    }
+</style>
+<div class="header-bar">
+    <h3><a href="{% url 'select' %}">Go back</a></h3>
+    <h3>Saving Account</h3><br>
+    <div>
+        {% for message in messages %}
+            <div style="color: red;font-size: 20px;">{{message}}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<form action="/viewsav/" method="GET">
+    <p><button class="button">View</button><span> &#36;{{camt}} </span></p>
+</form>
+
+<form action="/trans/" method="POST">
+    {% csrf_token %}
+    <p><button class="button">Transfer</button></p>
+</form>
+
+<form action="/depositsav/" method="POST">
+    {% csrf_token %}
+    <input class="number" type="number" placeholder="enter the amount" name="deposit" required>
+    <p><button class="button">Deposit</button></p>
+</form>
+
+<form action="/withdrawsav/" method="POST">
+    {% csrf_token %}
+    <input class="number" type="number" placeholder="enter the amount" name="withdraw" required>
+    <p><button class="button">Withdraw</button></p>
+</form>
+
+<div>
+    {% for message in messages %}
+        <div style="color: red;font-size: 20px;">{{message}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

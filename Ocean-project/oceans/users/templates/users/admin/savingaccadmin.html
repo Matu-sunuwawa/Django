@@ -1,0 +1,38 @@
+
+
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<div class="header-bar">
+    <h3><a href="{% url 'select' %}">Go back</a></h3>
+    <h3>My Ocean</h3><br>
+    <div>
+        {% for message in messages %}
+            <div style="color: red;font-size: 20px;">{{message}}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<form action="/viewsav/" method="GET">
+    <p><button class="button">View</button><span> &#36;{{camt}} </span></p>
+</form>
+
+<form action="/depositsav/" method="POST">
+    {% csrf_token %}
+    <input type="number" placeholder="enter the amount" name="deposit" required>
+    <p><button class="button">Deposit</button></p>
+</form>
+
+<form action="/withdrawsav/" method="POST">
+    {% csrf_token %}
+    <input type="number" placeholder="enter the amount" name="withdraw" required>
+    <p><button class="button">Withdraw</button></p>
+</form>
+
+<div>
+    {% for message in messages %}
+        <div style="color: red;font-size: 20px;">{{message}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

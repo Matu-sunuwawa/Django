@@ -1,0 +1,69 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+    <title>Ocean Service</title>
+</head>
+<body>
+
+    <!-- <style>
+        /* .contain{
+            text-align: center;
+        } */
+
+
+        /* Embeded styling */
+        body{
+            /* background-image: url(../css/images/orange-modern2.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; */
+            height: 95vh;
+        }
+        a:hover{
+            /* color: rgba(255, 166, 0, 1); */
+            text-shadow: 0 0 10px rgb(254, 166, 0), 0 0 10px rgb(255, 166, 0), 0 0 10px rgb(255, 166, 0);
+            transition: 0.5s ease;
+            text-decoration: none;
+        }
+    </style> -->
+    <!-- <h3>My form</h3> -->
+
+        <h3>Register Form</h3>
+
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            {{form|crispy}}
+            <input class="button" type="submit" name="submit" value="Login">
+            <p>Don't have account yet? <a href="{% url 'register' %}">Signup</a></p>
+        </form>
+
+        <!-- <form id="register">
+            <input type="text" name="uname" placeholder="Enter Username" required><br><br>
+            <input type="password" name="pass" placeholder="Enter Password" required><br><br>
+            <input type="password" name="confpass" placeholder="Confirm your password" required><br><br>
+            <input class="button" type="submit" name="submit" value="Register">
+
+            <p>Already have account? <a href="">Login</a></p>
+        </form> -->
+
+</body>
+</html>

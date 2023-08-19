@@ -1,0 +1,15 @@
+{% extends 'users/main.html' %}
+{% load static %}
+{% block content %}
+<script src="{% static 'users/js/main.js' %}"></script>
+<div>
+    {% if user.is_authenticated %}
+        <button class="button"><a style="text-decoration: none;" href="{% url 'logout' %}">logout</a></button>
+    {% else %}
+        <button class="button"><a style="text-decoration: none;" href="{% url 'register' %}">Signup</a></button>
+        <button class="button"><a style="text-decoration: none;" href="{% url 'login' %}">Signin</a></button>
+    {% endif %}
+    <h1 id="mam">Hello {{user.username}}</h1>
+    <button class="button" onclick="bob()">click here</button>
+</div>
+{% endblock %}
