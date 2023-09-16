@@ -93,7 +93,9 @@ class Chooseuser(LoginRequiredMixin,View):
         for a in data:
             if a.name == user.lower():            
                 return redirect('selectadmin')
-        return render(request, 'users/profile.html', {})
+        # return render(request, 'users/profile.html', {})
+        messages.info(request, "There is no such user!!")
+        return render(request, 'users/select.html')
     def post(self,request):
         global user
         user = request.POST['login']
@@ -101,7 +103,9 @@ class Chooseuser(LoginRequiredMixin,View):
         for a in data:
             if a.name == user.lower():            
                 return redirect('selectadmin')
-        return render(request, 'users/profile.html', {})
+        # return render(request, 'users/profile.html', {})
+        messages.info(request, "There is no such user!!")
+        return render(request, 'users/select.html')
 
 class Selectadmin(LoginRequiredMixin,View):
     def get(self,request):

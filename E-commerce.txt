@@ -25,3 +25,115 @@ Remember, these requirements may vary depending on the complexity and scale of y
 Created by https://GPTGO.ai
 
 #gptgo #chatgpt #freechatgpt #chatgptfree
+
+websites for mediator between parents(family) and freelancer and before prefering the freelancer there are question bank for parents(family) to know their feeling and during payment there are profits for the company to reduce some percent for company self and there are login system when the user are admin he/she can access the page which show the freelancer and all the web will do by using the django
+
+
+Below is an example code for a Django web application that serves as a mediator between parents (family) and freelancers. It includes a question bank for parents to assess their needs, a profit calculation for the company during the payment process, and a login system with an admin interface:
+
+
+
+# myapp/models.py
+from django.db import models
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_admin = models.BooleanField(default=False)
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+
+class Freelancer(models.Model):
+    name = models.CharField(max_length=200)
+    # Add more fields as per your requirements
+
+class Parent(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Add more fields as per your requirements
+
+class Payment(models.Model):
+    parent = models.ForeignKey(Parent, on_delete=models.CASCADE)
+    freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+    amount = models.FloatField()
+    # Add more fields as per your requirements
+
+# myapp/forms.py
+from django import forms
+from myapp.models import Parent
+
+class QuestionForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        question_list = kwargs.pop('question_list')
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        for question in question_list:
+            self.fields[question.question_text] = forms.ChoiceField(label=question.question_text,
+                                                                    choices=[('yes', 'Yes'), ('no', 'No')])
+
+class ParentForm(forms.ModelForm):
+    class Meta:
+        model = Parent
+        fields = ['username', 'password', 'email', '...']  # Add more fields as per user registration form requirements
+
+# myapp/views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from myapp.models import Question, Freelancer, Parent, Payment
+from myapp.forms import QuestionForm, ParentForm
+
+@login_required
+def question_bank(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST, question_list=Question.objects.all())
+        if form.is_valid():
+            # Process parents' answers
+            return redirect('freelancers')
+    else:
+        form = QuestionForm(question_list=Question.objects.all())
+
+    return render(request, 'question_bank.html', {'form': form})
+
+@login_required
+def freelancers(request):
+    freelancers = Freelancer.objects.all()
+    return render(request, 'freelancers.html', {'freelancers': freelancers})
+
+@login_required
+def select_freelancer(request, freelancer_id):
+    parent = Parent.objects.get(user=request.user)
+    freelancer = Freelancer.objects.get(id=freelancer_id)
+    amount = 100  # Amount calculation based on parent's requirements
+    profit = amount * 0.1  # 10% profit for the company
+    Payment.objects.create(parent=parent, freelancer=freelancer, amount=amount)
+    return redirect('payments')
+
+@user_passes_test(lambda u: u.userprofile.is_admin)
+def payments(request):
+    payments = Payment.objects.all()
+    return render(request, 'payments.html', {'payments': payments})
+
+# myapp/urls.py
+from django.urls import path
+from myapp.views import question_bank, freelancers, select_freelancer, payments
+from django.contrib.auth import views as auth_views
+
+urlpatterns = [
+    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('question-bank/', question_bank, name='question_bank'),
+    path('freelancers/', freelancers, name='freelancers'),
+    path('freelancers/<int:freelancer_id>/', select_freelancer, name='select_freelancer'),
+    path('payments/', payments, name='payments'),
+]
+
+# myproject/settings.py
+# ...
+LOGIN_REDIRECT_URL = 'question_bank'
+# ...
+
+Copy code
+
+This code provides a basic implementation. You may need to modify it according to your specific requirements, such as adding more fields, views, templates, and authentication/authorization rules.
+
+Created by https://GPTGO.ai
+
+#gptgo #chatgpt #freechatgpt #chatgptfree
